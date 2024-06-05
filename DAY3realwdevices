@@ -20,13 +20,18 @@ network 10.32.100.0 0.0.0.255
 no auto-summary
 
 !@EDGE
+config t
 router eigrp 32
 no auto-summary 
 network 10.32.32.0 0.0.0.255
+end
+
+config t
 router ospf 1
 router-id 32.0.0.1
 network 200.0.0.0 0.0.0.255 area 0
 network 32.0.0.1 0.0.0.255 area 0
+end
 
 !@Check if EIGRP us working correctly
 show ip eigrp neighbor
@@ -39,4 +44,5 @@ router ospf 1
 redistribute eigrp 32 subnets
 router eigrp 32
 redistribute ospf 1 Metric 1000000 1 255 1 1500
+end
 !@K1 BW K2 DELAY K3 RELIABILITY K4 LOAD K5 MTU
