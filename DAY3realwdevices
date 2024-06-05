@@ -39,3 +39,4 @@ router ospf 1
 redistribute eigrp 32 subnets
 router eigrp 32
 redistribute ospf 1 Metric 1000000 1 255 1 1500
+!@K1 BW K2 DELAY K3 RELIABILITY K4 LOAD K5 MTU
