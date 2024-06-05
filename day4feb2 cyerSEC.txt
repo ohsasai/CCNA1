@@ -21,6 +21,105 @@ net  use  s: \\10.k.1.10\c$  /user:administrator
 
 net  use  s: \\10.k.1.10\c$
 
+TASK 1 - Protect your people/staff against harm. Use Cisco acces list to block dangerous/malicious sites
+step 1-give unlimited internet to edge
+!@edge
+conf t
+ip route 0.0.0.0 0.0.0 200.0.0.1
+ip name-server 8.8.8.8
+ip domain-lookup
+end
+conf t
+NO ip access-list standard NOPORN1
+ip access-list standard NOPORN1
+DENY 66.254.0.0 0.0.255.255
+DENY 104.21.0.0 0.0.255.255
+DENY 68.235.0.0 0.0.255.255
+DENY 104.17.0.0 0.0.255.255
+DENY 88.208.0.0 0.0.255.255
+Permit Any
+Int gi 0/0/1
+ip access-group NOPORN1 in
+end
+
+TASK 2: Use standard access list to block countries/classmates
+conf t
+ip route 0.0.0.0 0.0.0 200.0.0.1
+ip name-server 8.8.8.8
+ip domain-lookup
+end
+conf t
+NO ip access-list standard NOCOL1
+ip access-list standard NOCOL1
+DENY 10.11.0.0 0.0.255.255
+DENY 10.21.0.0 0.0.255.255
+DENY 10.31.0.0 0.0.255.255
+DENY 10.41.0.0 0.0.255.255
+DENY 10.51.0.0 0.0.255.255
+DENY 10.61.0.0 0.0.255.255
+Permit Any
+Int gi 0/0/1
+ip access-group NOCOL1 in
+end
+
+!@UNDO:
+conf t
+NO ip access-list standard NOCOL1
+ip access-list standard NOCOL1
+no DENY 10.11.0.0 0.0.255.255
+no DENY 10.21.0.0 0.0.255.255
+no DENY 10.31.0.0 0.0.255.255
+no DENY 10.41.0.0 0.0.255.255
+no DENY 10.51.0.0 0.0.255.255
+no DENY 10.61.0.0 0.0.255.255
+Permit Any
+Int gi 0/0/1
+ip access-group NOCOL1 in
+end
+
+GROUP2(ROW2 and 3)
+conf t
+NO ip access-list standard GROUP2
+ip access-list standard GROUP2
+DENY 10.11.0.0 0.0.255.255
+DENY 10.12.0.0 0.0.255.255
+DENY 10.21.0.0 0.0.255.255
+DENY 10.22.0.0 0.0.255.255
+DENY 10.51.0.0 0.0.255.255
+DENY 10.52.0.0 0.0.255.255
+DENY 10.61.0.0 0.0.255.255
+DENY 10.62.0.0 0.0.255.255
+Permit Any
+Int gi 0/0/1
+ip access-group GROUP2 in
+end
+
+Remove access list:
+conf t
+Int gi 0/0/1
+no ip access-group THREE in
+end
+
+conf t
+NO ip access-list standard THREE
+ip access-list standard THREE
+DENY 10.11.0.0 0.0.255.255
+DENY 10.21.0.0 0.0.255.255
+DENY 10.31.0.0 0.0.255.255
+DENY 10.41.0.0 0.0.255.255
+DENY 10.51.0.0 0.0.255.255
+DENY 10.61.0.0 0.0.255.255
+DENY 10.42.0.0 0.0.255.255
+DENY 10.52.0.0 0.0.255.255
+DENY 10.62.0.0 0.0.255.255
+Permit Any
+Int gi 0/0/1
+ip access-group THREE in
+end
+
+
+
+
 TASK3: When you become a Security Analyst:
 Learn to Block the IPaddress from 3 "BAD" countries:
 NorthKorea, RUSSIA, China.= where all the Best hackers live.
@@ -118,11 +217,11 @@ intentionally hackable websites
 
 task6: How to Make CUCM intentionally hackable to Learn
 the Basics for Firewalls.
-before: nmap -v 10.m.100.8
+before: nmap -v 10.32.100.8
 @Cucm:
 config t
 int fa 0/0
- ip add 10.m.100.9 255.255.255.0 Secondary
+ ip add 10.32.100.9 255.255.255.0 Secondary
 service finger
 service tcp-small-servers
 service udp-small-servers
@@ -130,13 +229,15 @@ ip dns server
 ip http server
 ip http secure-server
 !Make Ping EASY
-ip host pc 10.m.1.10
-ip host cm 10.m.100.8
-ip host cm2 10.m.100.9
-ip host p1 10.m.100.101
-ip host p2 10.m.100.102
-ip host sw 10.m.1.4
-ip host ed 10.m.m.1
+ip host pc 10.32.1.10
+ip host cm 10.32.100.8
+ip host cm2 10.32.100.9
+ip host p1 10.32.100.101
+ip host p2 10.32.100.102
+ip host c6 10.32.50.6
+ip host c8 10.32.50.8
+ip host sw 10.32.1.4
+ip host ed 10.32.32.1
 
 TASK7: Enter the World of BlueTeam: Protect vs Redteam: Attack, 
 BlueTeam: UTM: unified Threat management:
@@ -149,6 +250,12 @@ Top 5 UTM: 1.FortinetFortigate:
            1.1: Palo Alto:superSuplado
            2. Checkpoint
            3.4 Cisco
+
+
+
+
+
+
 
 TASK8: CONGigure YOur first Packet Filter Firewall.
  FORMULA: "  Protocol    hacker   victim  Port "
@@ -218,7 +325,7 @@ end
 
 REMOVE POLICY:
  Int fa 0/0
-  NO ip access-group fwpolicy3 in
+  NO ip access-group fwpolicy1 in
 end
 
 TASK5: MULTIPLE HACKER MULTIPLE VICTIM:
