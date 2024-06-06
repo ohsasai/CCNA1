@@ -19,7 +19,7 @@ method1: Ipv6 autoconfig/autoBwisit
 @p1
 config t
 ipv6 unicast-routing
-int e0/0
+int giga 2
  ipv6 enable
  Ipv6 address autoconfig
 
@@ -35,7 +35,7 @@ as host.
 @P1
 config t
 ipv6 unicast-routing
-int e0/0
+int giga 2
  no shutdown
  ipv6 add dada:dada:fafa:fafa::/64 EUI-64
  do sh ipv6 int brief
@@ -54,8 +54,8 @@ Method3: STatic IPv6 address manual:
 @p1
 config t
 ipv6 unicast-routing
-int e0/0
- ipv6 add aaaa:bbbb:cccc:dddd::1212/64
+int giga 2
+ ipv6 add baba:baba:baba:baba::/64
  do sh ipv6 int brief
 end
 
@@ -87,7 +87,7 @@ sh spanning-tree vlan 1
 TASK3: EXPENSIVE SWITCH/MANAGEABLE SWITCH:\ = 20k
 1. mac address learning": sh mac address-table
 2  mac address filtering
-3  mac address forwaring
+3  mac address forwarding
 4  Php: loop avoidance
 5. $$: Vlan Feature $$ = 60k up
 
@@ -122,7 +122,7 @@ indicator no.3: Kislap every 1/2 seconds
 TASK6: HOW TO GET FIRED IMMEDIATELY!
 @baba:
 config t
- spanning-tree vlan 1
+ no spanning-tree vlan 1
 end
 @taas:
 config t
@@ -154,7 +154,8 @@ Int Range fa0/10-12
 Dot1q = Qupid,mave switches love each other:
       IEEE standard where SW will from Layer 2 trunks
 
-TASK9: SPANNING-TREE PROTOCOL: 802.1D
+TASK9: SPANNING-TREE PROTOCOL: 802.1D - protect switches slowly
+blk-lis-lrn-fwd=30sec
 wireshark = bridge priority is 32768 = very Hackable!
 " bobo/inutil ang Network Engineer nyo sa company!"
 Protect the Most Important SWitch in your 
@@ -216,15 +217,15 @@ end
 #sh int status err-disabled 
 TAAS: bounce/UP/down
 config t
-int fa 0/1
+int fa 0/3
  shut
  no shut
-int fa 0/5
+int fa 0/7
  shut
  no shut
 end
 
-TASK11: Multiple instance STP:
+TASK11: Multiple instance STP:802.1S
 step1: sync all Vlans with VTP:vlanTrunkingProtocol:
 TAAS/BABA: d1/d2:
 config t
